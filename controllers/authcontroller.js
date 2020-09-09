@@ -91,11 +91,33 @@ exports.login = async (req,res,next) => {
                 
             }
         }
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(400).json({
             success: false,
             message: "Something went wrong!",
             error: err
         });
     }
+}
+
+exports.userDetails = (req, res, next) => {
+    const _id = req.params._id;
+
+    authModel.findById(_id)
+        .then(detailsResult => {
+            console.log(detailsResult);
+            res.status(200).json({
+                success: true,
+                message: "user details",
+                email: detailsResult
+            })
+        })
+        .catch(err => {
+            res.status(400).json({
+                success: false,
+                message: "search unsuccessfull!"
+            })
+        })
+
 }
